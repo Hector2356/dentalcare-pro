@@ -1,98 +1,72 @@
 'use client';
 
-import { useAuth } from '@/hooks/use-auth';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Calendar, Users, FileText, Settings, LogOut } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function DashboardPage() {
-  const { user, logout } = useAuth();
   const router = useRouter();
 
   const handleLogout = () => {
-    logout();
     router.push('/');
   };
 
-  const getRoleBasedActions = () => {
-    switch (user?.role) {
-      case 'ADMIN':
-        return [
-          {
-            title: 'Gestión de Usuarios',
-            description: 'Administra usuarios, médicos y pacientes',
-            icon: Users,
-            action: () => router.push('/admin/users'),
-            color: 'bg-blue-500',
-          },
-          {
-            title: 'Configuración',
-            description: 'Configura el sistema',
-            icon: Settings,
-            action: () => router.push('/admin/settings'),
-            color: 'bg-gray-500',
-          },
-        ];
-      case 'DOCTOR':
-        return [
-          {
-            title: 'Mi Calendario',
-            description: 'Gestiona tu agenda y disponibilidad',
-            icon: Calendar,
-            action: () => router.push('/doctor/calendar'),
-            color: 'bg-green-500',
-          },
-          {
-            title: 'Mis Pacientes',
-            description: 'Ver lista de pacientes',
-            icon: Users,
-            action: () => router.push('/doctor/patients'),
-            color: 'bg-purple-500',
-          },
-        ];
-      case 'PATIENT':
-        return [
-          {
-            title: 'Agendar Cita',
-            description: 'Reserva una nueva cita',
-            icon: Calendar,
-            action: () => router.push('/patient/appointments/new'),
-            color: 'bg-blue-500',
-          },
-          {
-            title: 'Mis Citas',
-            description: 'Ver tus citas agendadas',
-            icon: FileText,
-            action: () => router.push('/patient/appointments'),
-            color: 'bg-green-500',
-          },
-          {
-            title: 'Membresías',
-            description: 'Gestiona tus membresías',
-            icon: Users,
-            action: () => router.push('/patient/memberships'),
-            color: 'bg-purple-500',
-          },
-        ];
-      default:
-        return [];
-    }
-  };
-
-  const actions = getRoleBasedActions();
+  const actions = [
+    {
+      title: 'Mi Calendario',
+      description: 'Gestiona tu agenda y disponibilidad',
+      icon: Calendar,
+      href: '/dashboard/doctor/calendar',
+      color: 'bg-green-500',
+    },
+    {
+      title: 'Citas Programadas',
+      description: 'Ver y gestionar citas',
+      icon: Calendar,
+      href: '/dashboard/doctor/appointments',
+      color: 'bg-blue-500',
+    },
+    {
+      title: 'Mis Pacientes',
+      description: 'Ver lista de pacientes',
+      icon: Users,
+      href: '/dashboard/doctor/patients',
+      color: 'bg-purple-500',
+    },
+    {
+      title: 'Historial Médico',
+      description: 'Expedientes clínicos',
+      icon: FileText,
+      href: '/dashboard/doctor/history',
+      color: 'bg-orange-500',
+    },
+    {
+      title: 'Notificaciones',
+      description: 'Alertas y recordatorios',
+      icon: Settings,
+      href: '/dashboard/doctor/notifications',
+      color: 'bg-red-500',
+    },
+    {
+      title: 'Configuración',
+      description: 'Ajustes de perfil',
+      icon: Settings,
+      href: '/dashboard/doctor/settings',
+      color: 'bg-gray-500',
+    },
+  ];
 
   return (
     <div className="space-y-6">
       {/* Welcome Section */}
       <div className="bg-white rounded-lg shadow p-6">
         <h1 className="text-2xl font-bold text-gray-900 mb-2">
-          Bienvenido, {user?.name}!
+          Bienvenido, Doctor Demo!
         </h1>
         <p className="text-gray-600">
-          {user?.role === 'ADMIN' && 'Panel de Administración'}
-          {user?.role === 'DOCTOR' && 'Panel de Médico'}
-          {user?.role === 'PATIENT' && 'Panel de Paciente'}
+          Panel de Médico - Modo de Prueba
         </p>
       </div>
 
@@ -112,12 +86,11 @@ export default function DashboardPage() {
               <CardDescription className="mb-4">
                 {action.description}
               </CardDescription>
-              <Button 
-                onClick={action.action}
-                className="w-full"
-              >
-                Ir a {action.title}
-              </Button>
+              <Link href={action.href}>
+                <Button className="w-full">
+                  Ir a {action.title}
+                </Button>
+              </Link>
             </CardContent>
           </Card>
         ))}
@@ -132,32 +105,20 @@ export default function DashboardPage() {
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <p className="text-sm font-medium text-gray-500">Nombre</p>
-              <p className="text-lg">{user?.name}</p>
+              <p className="text-lg">Doctor Demo</p>
             </div>
             <div>
               <p className="text-sm font-medium text-gray-500">Correo</p>
-              <p className="text-lg">{user?.email}</p>
-            </div>
-            <div>
-              <p className="text-sm font-medium text-gray-500">Identificación</p>
-              <p className="text-lg">{user?.identification}</p>
+              <p className="text-lg">doctor@dentalcare.com</p>
             </div>
             <div>
               <p className="text-sm font-medium text-gray-500">Rol</p>
-              <p className="text-lg capitalize">{user?.role}</p>
+              <p className="text-lg">DOCTOR</p>
             </div>
-            {user?.phone && (
-              <div>
-                <p className="text-sm font-medium text-gray-500">Teléfono</p>
-                <p className="text-lg">{user.phone}</p>
-              </div>
-            )}
-            {user?.address && (
-              <div>
-                <p className="text-sm font-medium text-gray-500">Dirección</p>
-                <p className="text-lg">{user.address}</p>
-              </div>
-            )}
+            <div>
+              <p className="text-sm font-medium text-gray-500">Modo</p>
+              <p className="text-lg">Prueba</p>
+            </div>
           </div>
           
           <div className="mt-6 pt-6 border-t">
