@@ -64,65 +64,77 @@ export default function HomePage() {
             Características Principales
           </h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <CalendarDays className="h-8 w-8 text-blue-600 mb-2" />
-                <CardTitle>Gestión de Citas</CardTitle>
-                <CardDescription>
-                  Administre y programe citas de manera eficiente
-                </CardDescription>
-              </CardHeader>
-            </Card>
+            <Link href="/dashboard/doctor/calendar">
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+                <CardHeader>
+                  <CalendarDays className="h-8 w-8 text-blue-600 mb-2" />
+                  <CardTitle>Gestión de Citas</CardTitle>
+                  <CardDescription>
+                    Administre y programe citas de manera eficiente
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
 
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <Users className="h-8 w-8 text-green-600 mb-2" />
-                <CardTitle>Directorio de Pacientes</CardTitle>
-                <CardDescription>
-                  Mantenga un registro completo de sus pacientes
-                </CardDescription>
-              </CardHeader>
-            </Card>
+            <Link href="/dashboard/doctor/patients">
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+                <CardHeader>
+                  <Users className="h-8 w-8 text-green-600 mb-2" />
+                  <CardTitle>Directorio de Pacientes</CardTitle>
+                  <CardDescription>
+                    Mantenga un registro completo de sus pacientes
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
 
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <FileText className="h-8 w-8 text-purple-600 mb-2" />
-                <CardTitle>Historial Médico</CardTitle>
-                <CardDescription>
-                  Acceda al historial clínico de cada paciente
-                </CardDescription>
-              </CardHeader>
-            </Card>
+            <Link href="/dashboard/doctor/history">
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+                <CardHeader>
+                  <FileText className="h-8 w-8 text-purple-600 mb-2" />
+                  <CardTitle>Historial Médico</CardTitle>
+                  <CardDescription>
+                    Acceda al historial clínico de cada paciente
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
 
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <Bell className="h-8 w-8 text-orange-600 mb-2" />
-                <CardTitle>Notificaciones</CardTitle>
-                <CardDescription>
-                  Manténgase informado con alertas y recordatorios
-                </CardDescription>
-              </CardHeader>
-            </Card>
+            <Link href="/dashboard/doctor/notifications">
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+                <CardHeader>
+                  <Bell className="h-8 w-8 text-orange-600 mb-2" />
+                  <CardTitle>Notificaciones</CardTitle>
+                  <CardDescription>
+                    Manténgase informado con alertas y recordatorios
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
 
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <Clock className="h-8 w-8 text-teal-600 mb-2" />
-                <CardTitle>Horarios Flexibles</CardTitle>
-                <CardDescription>
-                  Gestione horarios de atención y disponibilidad
-                </CardDescription>
-              </CardHeader>
-            </Card>
+            <Link href="/dashboard/doctor/calendar">
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+                <CardHeader>
+                  <Clock className="h-8 w-8 text-teal-600 mb-2" />
+                  <CardTitle>Horarios Flexibles</CardTitle>
+                  <CardDescription>
+                    Gestione horarios de atención y disponibilidad
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
 
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <Shield className="h-8 w-8 text-red-600 mb-2" />
-                <CardTitle>Seguridad</CardTitle>
-                <CardDescription>
-                  Protección de datos confidenciales de pacientes
-                </CardDescription>
-              </CardHeader>
-            </Card>
+            <Link href="/dashboard/doctor/settings">
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+                <CardHeader>
+                  <Shield className="h-8 w-8 text-red-600 mb-2" />
+                  <CardTitle>Seguridad</CardTitle>
+                  <CardDescription>
+                    Protección de datos confidenciales de pacientes
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
           </div>
         </div>
       </section>
