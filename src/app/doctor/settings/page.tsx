@@ -27,7 +27,8 @@ import {
   Camera,
   Stethoscope,
   Hospital,
-  Award
+  Award,
+  Plus
 } from 'lucide-react'
 import { useTestMode } from '@/lib/test-mode'
 
