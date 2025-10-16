@@ -1,6 +1,8 @@
 import { apiClient, ApiResponse, ApiError, handleApiError } from '@/lib/api-client';
 import { MembershipType } from '@prisma/client';
 
+export { MembershipType };
+
 export interface Membership {
   id: string;
   name: string;

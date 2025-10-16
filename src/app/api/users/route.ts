@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { UserService } from '@/services/user.service';
-import { withAuth, AuthenticatedRequest } from '@/lib/auth-middleware';
+import { withAuth, AuthenticatedRequest, withRole } from '@/lib/auth-middleware';
 import { UserRole } from '@prisma/client';
 import { z } from 'zod';
 
