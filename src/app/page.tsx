@@ -2,12 +2,17 @@
 
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { CalendarDays, Users, FileText, Bell, Settings, ArrowRight, Stethoscope, Clock, Shield } from 'lucide-react';
+import { CalendarDays, Users, FileText, Bell, Settings, ArrowRight, Stethoscope, Clock, Shield, Plus } from 'lucide-react';
 import Link from 'next/link';
+import AppointmentModal from '@/components/appointment-modal';
+import { useState } from 'react';
 
 export default function SimpleHomePage() {
+  const [isAppointmentModalOpen, setIsAppointmentModalOpen] = useState(false);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-teal-50">
+    <>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-teal-50">
       {/* Header */}
       <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
@@ -21,9 +26,18 @@ export default function SimpleHomePage() {
                 <p className="text-sm text-gray-600">Sistema de Gestión Dental</p>
               </div>
             </div>
-            <Badge variant="secondary" className="bg-green-100 text-green-800">
-              Modo Prueba
-            </Badge>
+            <div className="flex items-center space-x-3">
+              <Button 
+                onClick={() => setIsAppointmentModalOpen(true)}
+                className="bg-blue-600 hover:bg-blue-700 text-white"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Nueva Cita
+              </Button>
+              <Badge variant="secondary" className="bg-green-100 text-green-800">
+                Modo Prueba
+              </Badge>
+            </div>
           </div>
         </div>
       </header>
@@ -162,6 +176,12 @@ export default function SimpleHomePage() {
           </p>
         </div>
       </footer>
-    </div>
+      </div>
+      
+      <AppointmentModal 
+        isOpen={isAppointmentModalOpen}
+        onClose={() => setIsAppointmentModalOpen(false)}
+      />
+    </>
   );
 }

@@ -3,10 +3,13 @@
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { CalendarDays, Users, FileText, Bell, Settings, Clock, Activity } from 'lucide-react';
+import { CalendarDays, Users, FileText, Bell, Settings, Clock, Activity, Plus } from 'lucide-react';
 import Link from 'next/link';
+import AppointmentModal from '@/components/appointment-modal';
 
 export default function DoctorDashboard() {
+  const [isAppointmentModalOpen, setIsAppointmentModalOpen] = useState(false);
+
   const stats = [
     {
       title: "Citas de Hoy",
@@ -88,16 +91,28 @@ export default function DoctorDashboard() {
   ];
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="bg-white rounded-lg shadow p-6">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          Panel del Doctor
-        </h1>
-        <p className="text-gray-600">
-          Bienvenido al sistema de gestión dental
-        </p>
-      </div>
+    <>
+      <div className="space-y-6">
+        {/* Header */}
+        <div className="bg-white rounded-lg shadow p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                Panel del Doctor
+              </h1>
+              <p className="text-gray-600">
+                Bienvenido al sistema de gestión dental
+              </p>
+            </div>
+            <Button 
+              onClick={() => setIsAppointmentModalOpen(true)}
+              className="bg-blue-600 hover:bg-blue-700 text-white"
+            >
+              <Plus className="h-4 w-4 mr-2" />
+              Nueva Cita
+            </Button>
+          </div>
+        </div>
 
       {/* Stats Grid */}
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -184,6 +199,12 @@ export default function DoctorDashboard() {
           </div>
         </CardContent>
       </Card>
-    </div>
+      </div>
+      
+      <AppointmentModal 
+        isOpen={isAppointmentModalOpen}
+        onClose={() => setIsAppointmentModalOpen(false)}
+      />
+    </>
   );
 }

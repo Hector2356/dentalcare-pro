@@ -1,11 +1,15 @@
 'use client';
 
+import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Bell, Check, X, Clock, Calendar, Users } from 'lucide-react';
+import { Bell, Check, X, Clock, Calendar, Users, Plus } from 'lucide-react';
 import Link from 'next/link';
+import AppointmentModal from '@/components/appointment-modal';
 
 export default function DoctorNotifications() {
+  const [isAppointmentModalOpen, setIsAppointmentModalOpen] = useState(false);
+
   const notifications = [
     {
       id: 1,
@@ -52,7 +56,8 @@ export default function DoctorNotifications() {
   const unreadCount = notifications.filter(n => !n.read).length;
 
   return (
-    <div className="space-y-6">
+    <>
+      <div className="space-y-6">
       {/* Header */}
       <div className="bg-white rounded-lg shadow p-6">
         <div className="flex items-center justify-between">
@@ -65,6 +70,13 @@ export default function DoctorNotifications() {
             </p>
           </div>
           <div className="flex items-center gap-2">
+            <Button 
+              onClick={() => setIsAppointmentModalOpen(true)}
+              variant="outline"
+            >
+              <Plus className="h-4 w-4 mr-2" />
+              Nueva Cita
+            </Button>
             {unreadCount > 0 && (
               <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm">
                 {unreadCount} no leídas
@@ -185,6 +197,12 @@ export default function DoctorNotifications() {
           </Button>
         </Link>
       </div>
-    </div>
+      </div>
+      
+      <AppointmentModal 
+        isOpen={isAppointmentModalOpen}
+        onClose={() => setIsAppointmentModalOpen(false)}
+      />
+    </>
   );
 }

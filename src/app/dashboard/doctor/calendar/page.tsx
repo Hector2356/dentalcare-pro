@@ -1,13 +1,18 @@
 'use client';
 
+import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { CalendarDays, Clock, Plus } from 'lucide-react';
 import Link from 'next/link';
+import AppointmentModal from '@/components/appointment-modal';
 
 export default function DoctorCalendar() {
+  const [isAppointmentModalOpen, setIsAppointmentModalOpen] = useState(false);
+
   return (
-    <div className="space-y-6">
+    <>
+      <div className="space-y-6">
       {/* Header */}
       <div className="bg-white rounded-lg shadow p-6">
         <div className="flex items-center justify-between">
@@ -19,7 +24,7 @@ export default function DoctorCalendar() {
               Gestiona tu agenda y disponibilidad
             </p>
           </div>
-          <Button>
+          <Button onClick={() => setIsAppointmentModalOpen(true)}>
             <Plus className="h-4 w-4 mr-2" />
             Nueva Cita
           </Button>
@@ -107,6 +112,12 @@ export default function DoctorCalendar() {
           </Button>
         </Link>
       </div>
-    </div>
+      </div>
+      
+      <AppointmentModal 
+        isOpen={isAppointmentModalOpen}
+        onClose={() => setIsAppointmentModalOpen(false)}
+      />
+    </>
   );
 }

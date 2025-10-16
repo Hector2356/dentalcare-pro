@@ -1,11 +1,15 @@
 'use client';
 
+import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Users, Search, Plus, FileText } from 'lucide-react';
+import { Users, Search, Plus, FileText, Calendar } from 'lucide-react';
 import Link from 'next/link';
+import AppointmentModal from '@/components/appointment-modal';
 
 export default function DoctorPatients() {
+  const [isAppointmentModalOpen, setIsAppointmentModalOpen] = useState(false);
+
   const patients = [
     {
       id: 1,
@@ -34,7 +38,8 @@ export default function DoctorPatients() {
   ];
 
   return (
-    <div className="space-y-6">
+    <>
+      <div className="space-y-6">
       {/* Header */}
       <div className="bg-white rounded-lg shadow p-6">
         <div className="flex items-center justify-between">
@@ -46,10 +51,19 @@ export default function DoctorPatients() {
               Directorio completo de pacientes
             </p>
           </div>
-          <Button>
-            <Plus className="h-4 w-4 mr-2" />
-            Nuevo Paciente
-          </Button>
+          <div className="flex items-center gap-3">
+            <Button>
+              <Plus className="h-4 w-4 mr-2" />
+              Nuevo Paciente
+            </Button>
+            <Button 
+              onClick={() => setIsAppointmentModalOpen(true)}
+              variant="outline"
+            >
+              <Calendar className="h-4 w-4 mr-2" />
+              Nueva Cita
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -138,6 +152,12 @@ export default function DoctorPatients() {
           </Button>
         </Link>
       </div>
-    </div>
+      </div>
+      
+      <AppointmentModal 
+        isOpen={isAppointmentModalOpen}
+        onClose={() => setIsAppointmentModalOpen(false)}
+      />
+    </>
   );
 }
