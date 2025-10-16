@@ -1,0 +1,271 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  DOCTOR
+  PATIENT
+}
+
+enum AppointmentStatus {
+  SCHEDULED
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+  NO_SHOW
+}
+
+enum PaymentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  REFUNDED
+}
+
+enum MembershipType {
+  BASIC
+  GOLD
+  VIP
+}
+
+enum AppointmentType {
+  MEMBERSHIP
+  PRIVATE
+  URGENT
+}
+
+model User {
+  id              String   @id @default(cuid())
+  email           String   @unique
+  passwordHash    String   @map("password_hash")
+  identification  String   @unique @map("identification_number")
+  name            String
+  phone           String?
+  address         String?
+  birthDate       DateTime? @map("birth_date")
+  role            UserRole @default(PATIENT)
+  isActive        Boolean  @default(true) @map("is_active")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  doctorProfile   Doctor?
+  patientProfile  Patient?
+  appointments    Appointment[]
+  payments        Payment[]
+  invoices        Invoice[]
+  membershipSubscriptions MembershipSubscription[]
+
+  @@map("users")
+}
+
+model Doctor {
+  id                  String   @id @default(cuid())
+  userId              String   @unique @map("user_id")
+  specialties         String   // JSON array of specialties
+  description         String?
+  baseSchedule        String   @map("base_schedule") // JSON with weekly schedule
+  consultationDuration Int     @default(30) @map("consultation_duration") // minutes
+  isActive            Boolean  @default(true) @map("is_active")
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  appointments        Appointment[]
+  calendarBlocks      CalendarBlock[]
+  availabilityExceptions AvailabilityException[]
+
+  @@map("doctors")
+}
+
+model Patient {
+  id              String   @id @default(cuid())
+  userId          String   @unique @map("user_id")
+  medicalHistory  String?  @map("medical_history")
+  preferences     String?  // JSON with patient preferences
+  emergencyContact String? @map("emergency_contact")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  appointments    Appointment[]
+  membershipSubscriptions MembershipSubscription[]
+
+  @@map("patients")
+}
+
+model Membership {
+  id              String   @id @default(cuid())
+  name            String
+  description     String
+  type            MembershipType
+  price           Float
+  maxPeople       Int      @default(1) @map("max_people")
+  benefits        String   // JSON with benefits details
+  consultationsPerYear Int @default(0) @map("consultations_per_year")
+  prophylaxisPerYear   Int @default(0) @map("prophylaxis_per_year")
+  urgentConsultations  Int @default(0) @map("urgent_consultations")
+  discountPercentage   Float @default(0) @map("discount_percentage")
+  isActive        Boolean  @default(true) @map("is_active")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  subscriptions   MembershipSubscription[]
+
+  @@map("memberships")
+}
+
+model MembershipSubscription {
+  id                String   @id @default(cuid())
+  membershipId      String   @map("membership_id")
+  userId            String   @map("user_id")
+  startDate         DateTime @map("start_date")
+  endDate           DateTime @map("end_date")
+  peopleIncluded    String   @map("people_included") // JSON array of included people
+  servicesConsumed  String   @map("services_consumed") // JSON with consumed services
+  status            String   @default("ACTIVE")
+  paymentId         String?  @unique @map("payment_id")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  membership        Membership @relation(fields: [membershipId], references: [id])
+  user              User       @relation(fields: [userId], references: [id])
+  patient           Patient?   @relation(fields: [userId], references: [userId])
+  payment           Payment?   @relation(fields: [paymentId], references: [id])
+
+  @@unique([membershipId, userId])
+  @@map("membership_subscriptions")
+}
+
+model CalendarBlock {
+  id          String   @id @default(cuid())
+  doctorId    String   @map("doctor_id")
+  startDate   DateTime @map("start_date")
+  endDate     DateTime @map("end_date")
+  reason      String?
+  isRecurring Boolean  @default(false) @map("is_recurring")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  doctor      Doctor   @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+
+  @@map("calendar_blocks")
+}
+
+model AvailabilityException {
+  id          String   @id @default(cuid())
+  doctorId    String   @map("doctor_id")
+  date        DateTime
+  startTime   String   @map("start_time") // HH:MM format
+  endTime     String   @map("end_time")   // HH:MM format
+  isAvailable Boolean  @default(false) @map("is_available")
+  reason      String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  doctor      Doctor   @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+
+  @@unique([doctorId, date, startTime])
+  @@map("availability_exceptions")
+}
+
+model Appointment {
+  id              String            @id @default(cuid())
+  patientId       String            @map("patient_id")
+  doctorId        String            @map("doctor_id")
+  startDate       DateTime          @map("start_date")
+  endDate         DateTime          @map("end_date")
+  type            AppointmentType   @default(MEMBERSHIP)
+  status          AppointmentStatus @default(SCHEDULED)
+  reason          String?
+  notes           String?
+  googleCalendarEventId String?    @map("google_calendar_event_id")
+  paymentId       String?           @unique @map("payment_id")
+  createdBy       String            @map("created_by")
+  createdAt       DateTime          @default(now()) @map("created_at")
+  updatedAt       DateTime          @updatedAt @map("updated_at")
+
+  // Relations
+  patient         Patient           @relation(fields: [patientId], references: [id])
+  doctor          Doctor            @relation(fields: [doctorId], references: [id])
+  payment         Payment?          @relation(fields: [paymentId], references: [id])
+  creatorUser     User              @relation(fields: [createdBy], references: [id])
+
+  @@map("appointments")
+}
+
+model Payment {
+  id              String        @id @default(cuid())
+  userId          String        @map("user_id")
+  amount          Float
+  method          String        // ePayco, cash, etc.
+  reference       String?       // External payment reference
+  status          PaymentStatus @default(PENDING)
+  providerResponse String?      @map("provider_response") // JSON with provider response
+  appointmentId   String?       @unique @map("appointment_id")
+  membershipSubscriptionId String? @unique @map("membership_subscription_id")
+  createdAt       DateTime      @default(now()) @map("created_at")
+  updatedAt       DateTime      @updatedAt @map("updated_at")
+
+  // Relations
+  user            User          @relation(fields: [userId], references: [id])
+  appointment     Appointment?
+  invoice         Invoice?
+  membershipSubscription MembershipSubscription?
+
+  @@map("payments")
+}
+
+model Invoice {
+  id              String   @id @default(cuid())
+  paymentId       String   @unique @map("payment_id")
+  invoiceNumber   String   @unique @map("invoice_number")
+  pdfUrl          String?  @map("pdf_url")
+  amount          Float
+  tax             Float    @default(0)
+  total           Float
+  customerName    String   @map("customer_name")
+  customerEmail   String   @map("customer_email")
+  customerNit     String?  @map("customer_nit")
+  issuedAt        DateTime @default(now()) @map("issued_at")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  payment         Payment  @relation(fields: [paymentId], references: [id])
+  user            User     @relation(fields: [paymentId], references: [id])
+
+  @@map("invoices")
+}
+
+model Notification {
+  id          String   @id @default(cuid())
+  userId      String   @map("user_id")
+  type        String   // EMAIL, SMS, PUSH
+  title       String
+  message     String
+  status      String   @default("PENDING") // PENDING, SENT, FAILED
+  sentAt      DateTime? @map("sent_at")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("notifications")
+}
