@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Users, Search, Plus, FileText, Calendar } from 'lucide-react';
 import Link from 'next/link';
-import AppointmentModal from '@/components/appointment-modal';
+import { AppointmentModal } from '@/components/appointment-modal';
 
 export default function DoctorPatients() {
   const [isAppointmentModalOpen, setIsAppointmentModalOpen] = useState(false);

@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { CalendarDays, Users, FileText, Bell, Settings, ArrowRight, Stethoscope, Clock, Shield, Plus } from 'lucide-react';
 import Link from 'next/link';
-import AppointmentModal from '@/components/appointment-modal';
+import { AppointmentModal } from '@/components/appointment-modal';
 import { useState } from 'react';
 
 export default function SimpleHomePage() {
