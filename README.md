@@ -1,141 +1,264 @@
-# 🚀 Welcome to Z.ai Code Scaffold
+# 🦷 DentalCare Pro - Sistema de Gestión Dental
 
-A modern, production-ready web application scaffold powered by cutting-edge technologies, designed to accelerate your development with [Z.ai](https://chat.z.ai)'s AI-powered coding assistance.
+Un sistema de gestión integral para clínicas dentales, construido con tecnologías modernas para optimizar la administración de pacientes, citas y membresías.
 
-## ✨ Technology Stack
+## ✨ Características Principales
 
-This scaffold provides a robust foundation built with:
+### 🏥 Gestión de Pacientes
+- Registro completo de pacientes con historial médico
+- Gestión de citas y calendario integrado
+- Seguimiento de tratamientos dentales
+- Sistema de notificaciones automáticas
 
-### 🎯 Core Framework
-- **⚡ Next.js 15** - The React framework for production with App Router
-- **📘 TypeScript 5** - Type-safe JavaScript for better developer experience
-- **🎨 Tailwind CSS 4** - Utility-first CSS framework for rapid UI development
+### 👥 Gestión de Roles
+- **Administrador**: Control total del sistema
+- **Doctor**: Gestión de pacientes y citas
+- **Paciente**: Acceso a su información y citas
 
-### 🧩 UI Components & Styling
-- **🧩 shadcn/ui** - High-quality, accessible components built on Radix UI
-- **🎯 Lucide React** - Beautiful & consistent icon library
-- **🌈 Framer Motion** - Production-ready motion library for React
-- **🎨 Next Themes** - Perfect dark mode in 2 lines of code
+### 💳 Sistema de Membresías
+- Membresías premium con beneficios exclusivos
+- Gestión de suscripciones y pagos
+- Descuentos especiales para miembros
 
-### 📋 Forms & Validation
-- **🎣 React Hook Form** - Performant forms with easy validation
-- **✅ Zod** - TypeScript-first schema validation
+### 📅 Calendario Inteligente
+- Gestión de disponibilidad de doctores
+- Sistema de bloques de tiempo
+- Confirmación automática de citas
+- Recordatorios por email/SMS
 
-### 🔄 State Management & Data Fetching
-- **🐻 Zustand** - Simple, scalable state management
-- **🔄 TanStack Query** - Powerful data synchronization for React
-- **🌐 Axios** - Promise-based HTTP client
+## 🛠️ Stack Tecnológico
 
-### 🗄️ Database & Backend
-- **🗄️ Prisma** - Next-generation Node.js and TypeScript ORM
-- **🔐 NextAuth.js** - Complete open-source authentication solution
+### Frontend
+- **⚡ Next.js 15** - Framework React con App Router
+- **📘 TypeScript 5** - Tipado seguro y desarrollo robusto
+- **🎨 Tailwind CSS 4** - Diseño utility-first
+- **🧩 shadcn/ui** - Componentes UI de alta calidad
+- **🎯 Lucide React** - Iconos modernos y consistentes
+- **🌈 Framer Motion** - Animaciones fluidas
+- **🎨 Next Themes** - Soporte para modo oscuro/claro
 
-### 🎨 Advanced UI Features
-- **📊 TanStack Table** - Headless UI for building tables and datagrids
-- **🖱️ DND Kit** - Modern drag and drop toolkit for React
-- **📊 Recharts** - Redefined chart library built with React and D3
-- **🖼️ Sharp** - High performance image processing
+### Backend & Base de Datos
+- **🗄️ Prisma ORM** - Gestión de base de datos tipo-safe
+- **🔐 NextAuth.js** - Sistema de autenticación completo
+- **🌐 Socket.IO** - Comunicación en tiempo real
+- **📊 Zustand** - Manejo de estado del cliente
+- **🔄 TanStack Query** - Sincronización de datos del servidor
 
-### 🌍 Internationalization & Utilities
-- **🌍 Next Intl** - Internationalization library for Next.js
-- **📅 Date-fns** - Modern JavaScript date utility library
-- **🪝 ReactUse** - Collection of essential React hooks for modern development
-
-## 🎯 Why This Scaffold?
-
-- **🏎️ Fast Development** - Pre-configured tooling and best practices
-- **🎨 Beautiful UI** - Complete shadcn/ui component library with advanced interactions
-- **🔒 Type Safety** - Full TypeScript configuration with Zod validation
-- **📱 Responsive** - Mobile-first design principles with smooth animations
-- **🗄️ Database Ready** - Prisma ORM configured for rapid backend development
-- **🔐 Auth Included** - NextAuth.js for secure authentication flows
-- **📊 Data Visualization** - Charts, tables, and drag-and-drop functionality
-- **🌍 i18n Ready** - Multi-language support with Next Intl
-- **🚀 Production Ready** - Optimized build and deployment settings
-- **🤖 AI-Friendly** - Structured codebase perfect for AI assistance
+### Base de Datos
+- **🗄️ SQLite** - Base de datos ligera y eficiente
+- **🔍 Prisma Client** - Acceso tipo-safe a los datos
 
 ## 🚀 Quick Start
 
+### Prerrequisitos
+- Node.js 18+ 
+- npm o yarn
+
+### Instalación
+
 ```bash
-# Install dependencies
+# Clonar el repositorio
+git clone https://github.com/tu-usuario/dentalcare-pro.git
+cd dentalcare-pro
+
+# Instalar dependencias
 npm install
 
-# Start development server
+# Configurar base de datos
+npm run db:push
+
+# Iniciar servidor de desarrollo
 npm run dev
-
-# Build for production
-npm run build
-
-# Start production server
-npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see your application running.
+### Variables de Entorno
 
-## 🤖 Powered by Z.ai
+Crea un archivo `.env.local`:
 
-This scaffold is optimized for use with [Z.ai](https://chat.z.ai) - your AI assistant for:
+```env
+# Base de datos
+DATABASE_URL="file:./dev.db"
 
-- **💻 Code Generation** - Generate components, pages, and features instantly
-- **🎨 UI Development** - Create beautiful interfaces with AI assistance  
-- **🔧 Bug Fixing** - Identify and resolve issues with intelligent suggestions
-- **📝 Documentation** - Auto-generate comprehensive documentation
-- **🚀 Optimization** - Performance improvements and best practices
+# NextAuth
+NEXTAUTH_SECRET="tu-secreto-aqui"
+NEXTAUTH_URL="http://localhost:3000"
 
-Ready to build something amazing? Start chatting with Z.ai at [chat.z.ai](https://chat.z.ai) and experience the future of AI-powered development!
+# Configuración del servidor
+PORT=3000
+HOST=localhost
+```
 
-## 📁 Project Structure
+## 📁 Estructura del Proyecto
 
 ```
 src/
-├── app/                 # Next.js App Router pages
-├── components/          # Reusable React components
-│   └── ui/             # shadcn/ui components
-├── hooks/              # Custom React hooks
-└── lib/                # Utility functions and configurations
+├── app/                    # Páginas Next.js App Router
+│   ├── api/               # Rutas API
+│   ├── dashboard/         # Panel principal
+│   ├── doctor/            # Sección doctores
+│   ├── patient/           # Sección pacientes
+│   └── admin/             # Sección administración
+├── components/            # Componentes React
+│   ├── ui/               # Componentes shadcn/ui
+│   └── appointment-modal.tsx  # Modal de citas
+├── hooks/                # Hooks personalizados
+├── lib/                  # Utilidades y configuración
+├── services/             # Servicios de API
+└── stores/               # Manejo de estado
 ```
 
-## 🎨 Available Features & Components
+## 🎯 Funcionalidades Detalladas
 
-This scaffold includes a comprehensive set of modern web development tools:
+### 🔐 Autenticación y Autorización
+- Login con email y contraseña
+- Registro de nuevos usuarios
+- Protección de rutas por rol
+- Refresh tokens automáticos
+- Cambio de contraseña seguro
 
-### 🧩 UI Components (shadcn/ui)
-- **Layout**: Card, Separator, Aspect Ratio, Resizable Panels
-- **Forms**: Input, Textarea, Select, Checkbox, Radio Group, Switch
-- **Feedback**: Alert, Toast (Sonner), Progress, Skeleton
-- **Navigation**: Breadcrumb, Menubar, Navigation Menu, Pagination
-- **Overlay**: Dialog, Sheet, Popover, Tooltip, Hover Card
-- **Data Display**: Badge, Avatar, Calendar
+### 📊 Dashboard Principal
+- Estadísticas en tiempo real
+- Gráficos de pacientes y citas
+- Vista rápida de actividades recientes
+- Accesos directos a funciones principales
 
-### 📊 Advanced Data Features
-- **Tables**: Powerful data tables with sorting, filtering, pagination (TanStack Table)
-- **Charts**: Beautiful visualizations with Recharts
-- **Forms**: Type-safe forms with React Hook Form + Zod validation
+### 🗓️ Gestión de Citas
+- Creación de citas con modal intuitivo
+- Disponibilidad en tiempo real
+- Confirmación y cancelación
+- Recordatorios automáticos
+- Historial de citas por paciente
 
-### 🎨 Interactive Features
-- **Animations**: Smooth micro-interactions with Framer Motion
-- **Drag & Drop**: Modern drag-and-drop functionality with DND Kit
-- **Theme Switching**: Built-in dark/light mode support
+### 👤 Gestión de Pacientes
+- Ficha completa del paciente
+- Historial médico dental
+- Tratamientos realizados
+- Documentos adjuntos
+- Notas privadas del doctor
 
-### 🔐 Backend Integration
-- **Authentication**: Ready-to-use auth flows with NextAuth.js
-- **Database**: Type-safe database operations with Prisma
-- **API Client**: HTTP requests with Axios + TanStack Query
-- **State Management**: Simple and scalable with Zustand
+### 💎 Sistema de Membresías
+- Membresía Básica (gratuita)
+- Membresía Premium (beneficios exclusivos)
+- Gestión de pagos
+- Renovación automática
+- Descuentos especiales
 
-### 🌍 Production Features
-- **Internationalization**: Multi-language support with Next Intl
-- **Image Optimization**: Automatic image processing with Sharp
-- **Type Safety**: End-to-end TypeScript with Zod validation
-- **Essential Hooks**: 100+ useful React hooks with ReactUse for common patterns
+## 🔧 Scripts Disponibles
 
-## 🤝 Get Started with Z.ai
+```bash
+# Desarrollo
+npm run dev          # Servidor de desarrollo
+npm run build        # Build para producción
+npm run start        # Servidor de producción
+npm run lint         # Linting del código
 
-1. **Clone this scaffold** to jumpstart your project
-2. **Visit [chat.z.ai](https://chat.z.ai)** to access your AI coding assistant
-3. **Start building** with intelligent code generation and assistance
-4. **Deploy with confidence** using the production-ready setup
+# Base de datos
+npm run db:push      # Sincronizar schema
+npm run db:studio    # Prisma Studio
+npm run db:seed      # Poblar base de datos
+
+# Servidor personalizado
+npm run server       # Servidor con Socket.IO
+```
+
+## 🌐 Despliegue
+
+### Vercel (Recomendado)
+
+1. Conectar repositorio a Vercel
+2. Configurar variables de entorno
+3. Deploy automático en cada push
+
+```bash
+# Build para Vercel
+npm run build
+```
+
+### Docker
+
+```bash
+# Construir imagen
+docker build -t dentalcare-pro .
+
+# Ejecutar contenedor
+docker run -p 3000:3000 dentalcare-pro
+```
+
+### GitHub Pages
+
+1. Hacer fork del repositorio
+2. Activar GitHub Pages
+3. Configurar source: `gh-pages`
+
+## 🧪 Modo de Prueba
+
+El proyecto incluye un modo de prueba para desarrollo:
+
+```typescript
+// Activar modo prueba
+const TEST_MODE = true;
+```
+
+- Usuarios pre-configurados
+- Datos de ejemplo
+- Funcionalidades simuladas
+
+## 📱 Responsive Design
+
+- **Mobile-first**: Optimizado para dispositivos móviles
+- **Tablet**: Adaptación perfecta para tablets
+- **Desktop**: Experiencia completa en escritorio
+- **Touch-friendly**: Interacciones táctiles optimizadas
+
+## 🔒 Seguridad
+
+- Validación de inputs con Zod
+- Protección contra CSRF
+- Headers de seguridad
+- Sanitización de datos
+- Autenticación JWT segura
+
+## 🌍 Temas
+
+- Modo claro/oscuro automático
+- Detección de preferencias del sistema
+- Persistencia de preferencias
+- Transiciones suaves
+
+## 📈 Performance
+
+- Optimización de imágenes automáticas
+- Code splitting por páginas
+- Lazy loading de componentes
+- Caching inteligente
+- Bundle optimization
+
+## 🤝 Contribuir
+
+1. Fork del proyecto
+2. Crear feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit de cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push al branch (`git push origin feature/AmazingFeature`)
+5. Abrir Pull Request
+
+## 📄 Licencia
+
+Este proyecto está bajo licencia MIT - ver el archivo [LICENSE](LICENSE) para detalles.
+
+## 🆘 Soporte
+
+- 📧 Email: soporte@dentalcare.pro
+- 💬 Discord: [Comunidad DentalCare](https://discord.gg/dentalcare)
+- 📖 Documentación: [docs.dentalcare.pro](https://docs.dentalcare.pro)
+
+## 🙏 Agradecimientos
+
+- [Next.js](https://nextjs.org/) - Framework React
+- [Tailwind CSS](https://tailwindcss.com/) - Framework CSS
+- [shadcn/ui](https://ui.shadcn.com/) - Componentes UI
+- [Prisma](https://www.prisma.io/) - ORM
+- [NextAuth.js](https://next-auth.js.org/) - Autenticación
 
 ---
 
-Built with ❤️ for the developer community. Supercharged by [Z.ai](https://chat.z.ai) 🚀
+Built con ❤️ para la comunidad dental. ¡Mejorando la gestión de clínicas dentales! 🦷✨
