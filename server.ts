@@ -5,8 +5,8 @@ import { Server } from 'socket.io';
 import next from 'next';
 
 const dev = process.env.NODE_ENV !== 'production';
-const currentPort = 3000;
-const hostname = '0.0.0.0'; // Allow external access
+const currentPort = process.env.PORT ? parseInt(process.env.PORT) : 3000;
+const hostname = process.env.HOSTNAME || '0.0.0.0'; // Allow external access
 
 // Custom server with Socket.IO integration
 async function createCustomServer() {
@@ -44,8 +44,11 @@ async function createCustomServer() {
 
     // Start the server
     server.listen(currentPort, hostname, () => {
+      console.log(`> Environment: ${dev ? 'development' : 'production'}`);
       console.log(`> Ready on http://${hostname}:${currentPort}`);
       console.log(`> Socket.IO server running at ws://${hostname}:${currentPort}/api/socketio`);
+      console.log(`> Process ID: ${process.pid}`);
+      console.log(`> Node.js version: ${process.version}`);
     });
 
   } catch (err) {
@@ -56,3 +59,14 @@ async function createCustomServer() {
 
 // Start the server
 createCustomServer();
+
+// Graceful shutdown handling
+process.on('SIGTERM', () => {
+  console.log('SIGTERM received, shutting down gracefully');
+  process.exit(0);
+});
+
+process.on('SIGINT', () => {
+  console.log('SIGINT received, shutting down gracefully');
+  process.exit(0);
+});

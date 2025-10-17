@@ -1,0 +1,28 @@
+{
+  "version": "0.1.0",
+  "name": "dentalcare-pro",
+  "description": "Sistema de Gestión Dental Profesional",
+  "scripts": {
+    "start": "npm start",
+    "build": "npm run build",
+    "dev": "npm run dev"
+  },
+  "env": {
+    "NODE_ENV": "production",
+    "PORT": "3000",
+    "HOSTNAME": "0.0.0.0"
+  },
+  "healthCheck": {
+    "path": "/api/health",
+    "interval": 30000,
+    "timeout": 5000,
+    "retries": 3
+  },
+  "ports": {
+    "http": 3000
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  }
+}
